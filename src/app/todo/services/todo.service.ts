@@ -9,6 +9,7 @@ import { environment } from 'src/environments/environment';
 })
 export class TodoService {
   http = inject(HttpClient)
+  showCompleted: Boolean = false;
 
   getTodos(): Observable<Todo[]> {
     return this.http.get<Todo[]>(`${environment.apiUrl}`)
@@ -21,6 +22,10 @@ export class TodoService {
   updateTodo(updatedTodo: Todo): Observable<Todo> {
     const body = { title: updatedTodo.title, completed: updatedTodo.completed }
     return this.http.put<Todo>(`${environment.apiUrl}/${updatedTodo.id}`, body)
+  }
+
+  showCompletedToggle(){
+    this.showCompleted = !this.showCompleted
   }
 
   todos: Observable<Todo[]> = this.getTodos();
